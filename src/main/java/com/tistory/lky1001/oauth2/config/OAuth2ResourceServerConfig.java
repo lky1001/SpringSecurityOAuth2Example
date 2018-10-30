@@ -22,6 +22,7 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -55,32 +56,37 @@ public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter 
 
                     @Override
                     public String getName() {
-                        return null;
+                        return "melisa";
                     }
 
                     @Override
                     public Collection<? extends GrantedAuthority> getAuthorities() {
-                        return null;
+                        return Arrays.asList(new GrantedAuthority() {
+                            @Override
+                            public String getAuthority() {
+                                return "ROLE_USER";
+                            }
+                        });
                     }
 
                     @Override
                     public Object getCredentials() {
-                        return null;
+                        return "koala";
                     }
 
                     @Override
                     public Object getDetails() {
-                        return null;
+                        return new Object();
                     }
 
                     @Override
                     public Object getPrincipal() {
-                        return null;
+                        return "melisa";
                     }
 
                     @Override
                     public boolean isAuthenticated() {
-                        return false;
+                        return true;
                     }
 
                     @Override
@@ -112,7 +118,9 @@ public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter 
 
                     @Override
                     public Set<String> getScope() {
-                        return null;
+                        Set<String> scopes = new HashSet<>();
+                        scopes.add("read");
+                        return scopes;
                     }
 
                     @Override
@@ -268,7 +276,7 @@ public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter 
             .sessionCreationPolicy(SessionCreationPolicy.NEVER)
             .and()
             .authorizeRequests()
-            .antMatchers("/secure").access("#oauth2.hasScope('read')")
+            .antMatchers("/secure").access("hasRole('ROLE_USER')")
             .anyRequest().permitAll();
     }
 }

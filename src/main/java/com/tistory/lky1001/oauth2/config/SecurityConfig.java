@@ -1,6 +1,7 @@
 package com.tistory.lky1001.oauth2.config;
 
 import com.tistory.lky1001.oauth2.security.CustomAuthenticationProvider;
+import com.tistory.lky1001.oauth2.security.CustomOAuth2Provider;
 import com.tistory.lky1001.oauth2.security.CustomUserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
